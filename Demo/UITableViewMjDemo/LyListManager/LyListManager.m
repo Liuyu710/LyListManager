@@ -63,20 +63,20 @@
     if (self.isLoading) { return ; }
     
     [self reloadDataWithCompletion:^(NSError *error) {
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
-        
         if (error == nil) {
-            if (self.haveMoreData) {
-                [self.tableView.footer resetNoMoreData];
-            }
-            else {
-                [self.tableView.footer noticeNoMoreData];
-            }
             [self.tableView reloadData];
         }
         else {
             [self loadFailure:error];
+        }
+        
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        if (self.haveMoreData) {
+            [self.tableView.footer resetNoMoreData];
+        }
+        else {
+            [self.tableView.footer noticeNoMoreData];
         }
     }];
 }
@@ -85,18 +85,17 @@
     if (self.isLoading) { return ; }
     
     [self loadMoreDataWithCompletion:^(NSError *error) {
-        [self.tableView.header endRefreshing];
-        [self.tableView.footer endRefreshing];
-        
         if (error == nil) {
-            if (!self.haveMoreData) {
-                [self.tableView.footer noticeNoMoreData];
-            }
-            
             [self.tableView reloadData];
         }
         else {
             [self loadFailure:error];
+        }
+        
+        [self.tableView.header endRefreshing];
+        [self.tableView.footer endRefreshing];
+        if (!self.haveMoreData) {
+            [self.tableView.footer noticeNoMoreData];
         }
     }];
 }
@@ -112,7 +111,7 @@
 }
 
 - (void)loadDataWithCompletion:(void (^)(NSError *error))completion isReload:(BOOL)isReload {
-    if (self.isLoading) {
+    if (self.isLoading) {       // 为了安全起见，在这里也加了限制，理论上应该不会出现这样的情况
         completion(nil);
         return ;
     }
