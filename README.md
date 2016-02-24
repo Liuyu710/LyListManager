@@ -9,6 +9,7 @@
 
 # 使用
 
-1. 生产 LyListManager 对象，因为我的项目中都是用UITableView对象来显示数据，所以我弱引用了一个UITableView对象；
-2. 实现数据请求回掉即可
-3. 另外增加了数据请求开始、失败、结束的回调（可选的）
+1. 将LyListManger.h LyListManager.m 文件加入到项目中（MJRefresh这里不做引入了，可以直接引入MJRefresh的源码，也可以用Pods，也可以用其他的上啦下啦UI封装）
+2. 生产 LyListManager 对象，因为我的项目中都是用UITableView对象来显示数据，所以我弱引用了一个UITableView对象；
+3. 实现数据请求回掉即可
+4. 另外增加了数据请求开始、失败、结束的回调（可选的）
